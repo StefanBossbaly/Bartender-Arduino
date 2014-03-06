@@ -10,6 +10,8 @@ void stepper_init(stepper_t *stepper, uint8_t pin0, uint8_t pin1, uint8_t pin2, 
 	stepper->pin3 = pin3;
 	stepper->step = 0;
 
+	stepper->delay = DELAY;
+
 	pinMode(stepper->pin0, OUTPUT);
 	pinMode(stepper->pin1, OUTPUT);
 	pinMode(stepper->pin2, OUTPUT);
@@ -71,7 +73,7 @@ void stepper_step(stepper_t *stepper, uint8_t direction)
 		break;
 	}
 
-	delay(1);
+	delay(stepper->delay);
 }
 
 void stepper_release(stepper_t *stepper)

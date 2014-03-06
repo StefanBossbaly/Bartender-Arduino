@@ -8,6 +8,8 @@ extern "C"
 {
 #endif
 
+#define DELAY 2
+
 #define FORWARD 0
 #define REVERSE 1
 
@@ -15,6 +17,7 @@ typedef struct
 {
 	uint8_t step;
 	uint8_t pin0, pin1, pin2, pin3;
+	uint8_t delay;
 } stepper_t;
 
 void stepper_init(stepper_t *stepper, uint8_t pin0, uint8_t pin1, uint8_t pin2, uint8_t pin3);
