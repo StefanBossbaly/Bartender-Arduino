@@ -70,5 +70,8 @@ void stepper_step(stepper_t *stepper, uint8_t direction)
 
 void stepper_release(stepper_t *stepper)
 {
-
+	digitalWrite(stepper->pin0, HIGH);
+	digitalWrite(stepper->pin1, HIGH);
+	digitalWrite(stepper->pin2, HIGH);
+	digitalWrite(stepper->pin3, HIGH);
 }
