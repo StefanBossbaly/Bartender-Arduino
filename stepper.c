@@ -18,25 +18,31 @@ void stepper_init(stepper_t *stepper, uint8_t pin0, uint8_t pin1, uint8_t pin2, 
 
 void stepper_step(stepper_t *stepper, uint8_t direction)
 {
+	// Calculate the next step
 	if (direction == FORWARD)
 	{
-		stepper->step++;
-
-		if (stepper->step >= 4)
+		if (stepper->step == 3)
 		{
 			stepper->step = 0;
+		}
+		else
+		{
+			stepper->step++;
 		}
 	}
 	else
 	{
-		stepper->step--;
-
-		if (stepper->step < 0)
+		if (stepper->step == 0)
 		{
 			stepper->step = 3;
 		}
+		else
+		{
+			stepper->step--;
+		}
 	}
 
+	// See what step we are on
 	switch (stepper->step)
 	{
 	case 0:
@@ -65,7 +71,7 @@ void stepper_step(stepper_t *stepper, uint8_t direction)
 		break;
 	}
 
-	delay(5);
+	delay(1);
 }
 
 void stepper_release(stepper_t *stepper)
