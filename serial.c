@@ -130,6 +130,16 @@ void serial_write_byte(uint8_t data)
 	}
 }
 
+void serial_write_chunk(void *data, uint8_t size)
+{
+	uint8_t *ptr = (uint8_t *) data;
+
+	for (uint8_t i = 0; i < size; i++)
+	{
+		serial_write_byte(*(ptr + i));
+	}
+}
+
 /**
  * Recieve handler
  */

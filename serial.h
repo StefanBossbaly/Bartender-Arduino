@@ -23,6 +23,7 @@ void serial_begin(unsigned long baud);
 uint8_t serial_read_byte();
 uint8_t serial_available();
 void serial_write_byte(uint8_t data);
+void serial_write_chunk(void *data, uint8_t size);
 
 
 #ifdef __cplusplus
