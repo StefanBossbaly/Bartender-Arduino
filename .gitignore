@@ -1,0 +1,8 @@
+# CDT-specific
+.cproject
+
+# Local Settings
+.settings
+
+# Build output
+build-*
