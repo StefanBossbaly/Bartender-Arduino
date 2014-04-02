@@ -1,11 +1,14 @@
 #include "bartender.h"
 
+#include "Arduino.h"
+
 #include <math.h>
 #include <util/atomic.h>
 
-void bartender_init(bartender_t *bartender, stepper_t *stepper, uint8_t location)
+void bartender_init(bartender_t *bartender, stepper_t *stepper, toggle_driver_t *toggler, uint8_t location)
 {
 	bartender->stepper = stepper;
+	bartender->toggler = toggler;
 	bartender->location = location;
 }
 
@@ -25,11 +28,11 @@ void bartender_move_to_location(bartender_t *bartender, uint8_t location)
 	{
 		if (bartender->location - location > 0)
 		{
-			stepper_step(bartender->stepper, FORWARD);
+			stepper_multi_step(bartender->stepper, 500, FORWARD);
 		}
 		else
 		{
-			stepper_step(bartender->stepper, REVERSE);
+			stepper_multi_step(bartender->stepper, 500, REVERSE);;
 		}
 	}
 
@@ -48,6 +51,16 @@ void bartender_pour(bartender_t *bartender, uint8_t amount)
 	// We are pouring
 	bartender->status = STATUS_POURING;
 
+	digitalWrite(7, HIGH);
+	digitalWrite(8, LOW);
+	delay(5000);
+
+	digitalWrite(7, LOW);
+	digitalWrite(8, HIGH);
+	delay(5000);
+
+	digitalWrite(7, LOW);
+	digitalWrite(8, LOW);
 
 	// We are done
 	bartender->status = STATUS_NONE;

@@ -82,6 +82,8 @@ static void handler_process_cmd_move(handler_t *handler, uint8_t *buffer, uint8_
 static void handler_process_cmd_pour(handler_t *handler, uint8_t *buffer, uint8_t *rsp)
 {
 	protocol_build_ok_rsp(rsp, CMD_POUR);
+
+	bartender_pour(handler->bartender, 0);
 }
 
 static void handler_process_cmd_status(handler_t *handler, uint8_t *buffer, uint8_t *rsp)
