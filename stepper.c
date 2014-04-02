@@ -76,6 +76,14 @@ void stepper_step(stepper_t *stepper, uint8_t direction)
 	delay(stepper->delay);
 }
 
+void stepper_multi_step(stepper_t *stepper, uint16_t steps, uint8_t direction)
+{
+	for (uint16_t i = 0; i < steps; i++)
+	{
+		stepper_step(stepper, direction);
+	}
+}
+
 void stepper_release(stepper_t *stepper)
 {
 	digitalWrite(stepper->pin0, HIGH);
