@@ -24,17 +24,30 @@ void bartender_move_to_location(bartender_t *bartender, uint8_t location)
 	// We are moving
 	bartender->status = STATUS_MOVING;
 
-	for (uint8_t i = 0; i < fabs(bartender->location - location); i++)
+	uint8_t direction = FORWARD;
+
+	if (bartender->location > location)
 	{
-		if (bartender->location - location > 0)
+		direction = REVERSE;
+	}
+
+	// While the location doesn't equal location
+	while (bartender->location != location)
+	{
+		stepper_multi_step(bartender->stepper, 500, direction);
+
+		if (direction == FORWARD)
 		{
-			stepper_multi_step(bartender->stepper, 500, FORWARD);
+			bartender->location++;
 		}
 		else
 		{
-			stepper_multi_step(bartender->stepper, 500, REVERSE);;
+			bartender->location--;
 		}
 	}
+
+	// Release the stepper
+	stepper_release(bartender->stepper);
 
 	// We are done
 	bartender->status = STATUS_NONE;
