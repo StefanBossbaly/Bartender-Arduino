@@ -5,6 +5,8 @@
  *      Author: stefan
  */
 
+#include <Arduino.h>
+
 #include "handler.h"
 #include "protocol.h"
 
@@ -83,6 +85,7 @@ static void handler_process_cmd_pour(handler_t *handler, uint8_t *buffer, uint8_
 {
 	protocol_build_ok_rsp(rsp, CMD_POUR);
 
+	// Todo Implement amount
 	bartender_pour(handler->bartender, 0);
 }
 
