@@ -13,7 +13,6 @@ bartender_t bartender;
 
 // Current buffers
 uint8_t command[MSG_SIZE];
-uint8_t response[MSG_SIZE];
 
 uint8_t status = 0;
 uint8_t size = 0;
@@ -56,8 +55,7 @@ void loop()
 	
 	if (size == 32)
 	{
-		handler_handle(&handler, command, response);
-		serial_write_chunk(response, MSG_SIZE);
+		handler_handle(&handler, command);
 		size = 0;
 	}
 	
