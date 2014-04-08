@@ -38,4 +38,13 @@ void protocol_build_ok_rsp(uint8_t *buffer, uint8_t cmd)
 	buffer[I_RSP_CODE] = RSP_OK;
 }
 
+void protocol_build_complete_rsp(uint8_t *buffer, uint8_t cmd)
+{
+	protocol_clear_buffer(buffer);
+	protocol_add_endings(buffer);
+
+	buffer[I_TYPE] = TYPE_RSP;
+	buffer[I_CMD] = cmd;
+	buffer[I_RSP_CODE] = RSP_COMPLETE;
+}
 

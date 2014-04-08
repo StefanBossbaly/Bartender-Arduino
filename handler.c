@@ -9,6 +9,7 @@
 
 #include "handler.h"
 #include "protocol.h"
+#include "serial.h"
 
 static void handler_process_cmd_stop(handler_t *handler, uint8_t *buffer, uint8_t *rsp);
 static void handler_process_cmd_move(handler_t *handler, uint8_t *buffer, uint8_t *rsp);
@@ -22,13 +23,16 @@ void handler_init(handler_t *handler, bartender_t *bartender)
 	handler->bartender = bartender;
 }
 
-void handler_handle(handler_t *handler, uint8_t *cmd, uint8_t *rsp)
+void handler_handle(handler_t *handler, uint8_t *cmd)
 {
+	uint8_t rsp[MSG_SIZE];
+
 	// Make sure we have a valid packet
 	if (cmd[I_START] != MSG_START || cmd[I_END] != MSG_END)
 	{
 		// Send back a malformed packet error
 		protocol_build_error_rsp(rsp, BLANK, RSP_MAL_MSG);
+		serial_write_chunk(rsp, MSG_SIZE);
 		return;
 	}
 
@@ -71,22 +75,34 @@ static void handler_process_cmd_move(handler_t *handler, uint8_t *buffer, uint8_
 	{
 		// Let them know we are not happy
 		protocol_build_error_rsp(rsp, CMD_MOVE, RSP_ERROR);
+		serial_write_chunk(rsp, MSG_SIZE);
 		return;
 	}
+
+	// We are processing the command
+	protocol_build_ok_rsp(rsp, CMD_MOVE);
+	serial_write_chunk(rsp, MSG_SIZE);
 
 	// Start moving
 	bartender_move_to_location(handler->bartender, location);
 
 	// We have processed the command
-	protocol_build_ok_rsp(rsp, CMD_MOVE);
+	protocol_build_complete_rsp(rsp, CMD_MOVE);
+	serial_write_chunk(rsp, MSG_SIZE);
 }
 
 static void handler_process_cmd_pour(handler_t *handler, uint8_t *buffer, uint8_t *rsp)
 {
+	// We have received the command
 	protocol_build_ok_rsp(rsp, CMD_POUR);
+	serial_write_chunk(rsp, MSG_SIZE);
 
 	// Todo Implement amount
 	bartender_pour(handler->bartender, 0);
+
+	// The command has been completed
+	protocol_build_complete_rsp(rsp, CMD_POUR);
+	serial_write_chunk(rsp, MSG_SIZE);
 }
 
 static void handler_process_cmd_status(handler_t *handler, uint8_t *buffer, uint8_t *rsp)

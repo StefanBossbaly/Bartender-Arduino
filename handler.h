@@ -23,7 +23,7 @@ typedef struct
 } handler_t;
 
 void handler_init(handler_t *handler, bartender_t *bartender);
-void handler_handle(handler_t *handler, uint8_t *cmd, uint8_t *rsp);
+void handler_handle(handler_t *handler, uint8_t *cmd);
 
 
 #ifdef __cplusplus

@@ -87,9 +87,14 @@
 #define I_RSP_CODE 0x03
 
 /**
- * Response is
+ * We have received the command and it is of valid syntax
  */
 #define RSP_OK 0x01
+
+/**
+ * We have completed the command
+ */
+#define RSP_COMPLETE 0x05
 
 /**
  * An general error response. Try to avoid
@@ -118,6 +123,7 @@ extern "C"
 
 void protocol_build_error_rsp(uint8_t *buffer, uint8_t cmd, uint8_t code);
 void protocol_build_ok_rsp(uint8_t *buffer, uint8_t cmd);
+void protocol_build_complete_rsp(uint8_t *buffer, uint8_t cmd);
 
 #ifdef __cplusplus
 }
