@@ -24,11 +24,7 @@ void handle()
 }
 
 void setup()
-{
-	// Move this somewhere else
-	pinMode(7, OUTPUT);
-	pinMode(8, OUTPUT);
-	
+{	
 	// Begin serial command
 	serial_begin(9600);
 	
