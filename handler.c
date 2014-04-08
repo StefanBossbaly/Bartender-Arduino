@@ -36,27 +36,41 @@ void handler_handle(handler_t *handler, uint8_t *cmd)
 		return;
 	}
 
-	// Find the function to handle the command
-	switch(cmd[I_CMD])
+	// See if the type is command
+	if (cmd[I_TYPE] == TYPE_CMD)
 	{
-	case CMD_STOP:
-		handler_process_cmd_stop(handler, cmd, rsp);
-		break;
-	case CMD_MOVE:
-		handler_process_cmd_move(handler, cmd, rsp);
-		break;
-	case CMD_POUR:
-		handler_process_cmd_pour(handler, cmd, rsp);
-		break;
-	case CMD_STATUS:
-		handler_process_cmd_status(handler, cmd, rsp);
-		break;
-	case CMD_LOCATION:
-		handler_process_cmd_location(handler, cmd, rsp);
-		break;
-	default:
-		handler_process_unknown_cmd(handler, cmd, rsp);
-		break;
+		// Find the function to handle the command
+		switch(cmd[I_CMD])
+		{
+		case CMD_STOP:
+			handler_process_cmd_stop(handler, cmd, rsp);
+			break;
+		case CMD_MOVE:
+			handler_process_cmd_move(handler, cmd, rsp);
+			break;
+		case CMD_POUR:
+			handler_process_cmd_pour(handler, cmd, rsp);
+			break;
+		case CMD_STATUS:
+			handler_process_cmd_status(handler, cmd, rsp);
+			break;
+		case CMD_LOCATION:
+			handler_process_cmd_location(handler, cmd, rsp);
+			break;
+		default:
+			handler_process_unknown_cmd(handler, cmd, rsp);
+			break;
+		}
+	}
+	else if (cmd[I_TYPE] == TYPE_RSP)
+	{
+		// Not defined yet
+	}
+	else
+	{
+		// Send back an unknown type error
+		protocol_build_error_rsp(rsp, BLANK, RSP_UNK_TYPE);
+		serial_write_chunk(rsp, MSG_SIZE);
 	}
 }
 

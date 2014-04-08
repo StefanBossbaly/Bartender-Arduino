@@ -116,6 +116,8 @@
  */
 #define RSP_UNK_CMD 0x04
 
+#define RSP_UNK_TYPE 0x06
+
 #ifdef __cplusplus
 extern "C"
 {
