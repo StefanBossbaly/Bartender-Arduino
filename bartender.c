@@ -64,18 +64,14 @@ void bartender_pour(bartender_t *bartender, uint8_t amount)
 	// We are pouring
 	bartender->status = STATUS_POURING;
 
-	digitalWrite(7, HIGH);
-	digitalWrite(8, LOW);
+	toggle_driver_move(bartender->toggler, UP);
 	delay(5000);
 
-	digitalWrite(7, LOW);
-	digitalWrite(8, HIGH);
+	toggle_driver_move(bartender->toggler, DOWN);
 	delay(5000);
 
-	digitalWrite(7, LOW);
-	digitalWrite(8, LOW);
+	toggle_driver_stop(bartender->toggler);
 
 	// We are done
 	bartender->status = STATUS_NONE;
-
 }
