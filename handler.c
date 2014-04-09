@@ -1,10 +1,3 @@
-/*
- * handler.c
- *
- *  Created on: Mar 30, 2014
- *      Author: stefan
- */
-
 #include <Arduino.h>
 
 #include "handler.h"

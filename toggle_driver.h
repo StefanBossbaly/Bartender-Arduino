@@ -1,10 +1,3 @@
-/*
- * toggle_driver.h
- *
- *  Created on: Apr 1, 2014
- *      Author: stefan
- */
-
 #ifndef TOGGLE_DRIVER_H_
 #define TOGGLE_DRIVER_H_
 
@@ -17,7 +10,6 @@ extern "C"
 
 #define UP 0x01
 #define DOWN 0x02
-
 
 typedef struct
 {

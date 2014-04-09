@@ -1,10 +1,3 @@
-/*
- * serial.h
- *
- *  Created on: Mar 11, 2014
- *      Author: stefan
- */
-
 #ifndef SERIAL_H_
 #define SERIAL_H_
 
@@ -14,7 +7,6 @@ extern "C"
 #endif
 
 #include <inttypes.h>
-
 
 #define USART_RX_BUFFER_SIZE 64
 #define USART_TX_BUFFER_SIZE 64

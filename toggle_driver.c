@@ -1,10 +1,3 @@
-/*
- * toggle_driver.c
- *
- *  Created on: Apr 1, 2014
- *      Author: stefan
- */
-
 #include "Arduino.h"
 #include "toggle_driver.h"
 

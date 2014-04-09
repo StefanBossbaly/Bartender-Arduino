@@ -1,10 +1,3 @@
-/*
- * command_handler.h
- *
- *  Created on: Mar 30, 2014
- *      Author: stefan
- */
-
 #ifndef HANDLER_H_
 #define HANDLER_H_
 
