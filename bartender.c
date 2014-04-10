@@ -5,6 +5,8 @@
 #include <math.h>
 #include <util/atomic.h>
 
+uint16_t step_distances[13] = {900, 635, 675, 675, 660, 675, 675, 675, 675, 675, 645, 675, 675};
+
 void bartender_init(bartender_t *bartender, stepper_t *stepper, toggle_driver_t *toggler, uint8_t location)
 {
 	bartender->stepper = stepper;
@@ -34,7 +36,18 @@ void bartender_move_to_location(bartender_t *bartender, uint8_t location)
 	// While the location doesn't equal location
 	while (bartender->location != location)
 	{
-		stepper_multi_step(bartender->stepper, 500, direction);
+		uint16_t steps = 0;
+
+		if (direction == FORWARD)
+		{
+			steps = step_distances[bartender->location];
+		}
+		else
+		{
+			steps = step_distances[bartender->location - 1];
+		}
+
+		stepper_multi_step(bartender->stepper, steps, direction);
 
 		if (direction == FORWARD)
 		{
