@@ -5,11 +5,15 @@
 #include "handler.h"
 #include "bartender.h"
 #include "timer.h"
+#include "queue.h"
 
 stepper_t stepper;
 handler_t handler;
 toggle_driver_t toggler;
 bartender_t bartender;
+
+queue_t queue;
+uint8_t qdata[MSG_SIZE * 5];
 
 // Current buffers
 uint8_t command[MSG_SIZE];
@@ -19,7 +23,6 @@ uint8_t size = 0;
 
 void handle()
 {
-	
 }
 
 void setup()
@@ -41,12 +44,16 @@ void setup()
 	// Init message handler
 	handler_init(&handler, &bartender);
 	
+	// Init the queue
+	queue_init(&queue, qdata, MSG_SIZE, 5);
+	
 	// Init the timer
-	timer2_init_ms(150, handle);
+	timer2_init_ms(100, handle);
 }
 
 void loop()
 {
+	// While there is data that needs to be read
 	while (serial_available() > 0)
 	{
 		serial_read_byte(&command[size]);
@@ -58,6 +65,4 @@ void loop()
 		handler_handle(&handler, command);
 		size = 0;
 	}
-	
-	delay(5);
 }
