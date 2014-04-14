@@ -6,23 +6,54 @@
 #include "bartender.h"
 #include "timer.h"
 #include "queue.h"
+#include "error.h"
 
 stepper_t stepper;
 handler_t handler;
 toggle_driver_t toggler;
 bartender_t bartender;
 
+// Data for the queue
 queue_t queue;
-uint8_t qdata[MSG_SIZE * 5];
+uint8_t qdata[MSG_SIZE * 10];
 
 // Current buffers
-uint8_t command[MSG_SIZE];
-
-uint8_t status = 0;
+uint8_t temp_buffer[MSG_SIZE];
 uint8_t size = 0;
 
 void handle()
 {
+	// While there is serial data available
+	while (serial_available() > 0)
+	{
+		// Copy the byte into our temp buffer
+		serial_read_byte(&temp_buffer[size]);
+		size++;
+		
+		// We have a message! I wonder who its from
+		if (size == MSG_SIZE)
+		{
+			// If it is the status or the stop command we need to process it right away
+			if (temp_buffer[I_CMD] == CMD_STATUS || temp_buffer[I_CMD] == CMD_STOP)
+			{
+				handler_handle(&handler, temp_buffer);
+			}
+			else
+			{
+				// Add the buffer to the queue
+				uint8_t error = queue_enqueue(&queue, temp_buffer);
+				
+				// Oh boy a fatal error
+				if (error != E_NO_ERROR)
+				{
+					
+				}
+			}
+			
+			// Clear the buffer
+			size = 0;
+		}
+	}
 }
 
 void setup()
@@ -45,24 +76,29 @@ void setup()
 	handler_init(&handler, &bartender);
 	
 	// Init the queue
-	queue_init(&queue, qdata, MSG_SIZE, 5);
+	queue_init(&queue, qdata, MSG_SIZE, 10);
 	
 	// Init the timer
-	timer2_init_ms(100, handle);
+	timer2_init_ms(150, handle);
 }
 
 void loop()
 {
-	// While there is data that needs to be read
-	while (serial_available() > 0)
+	if (queue.size != 0)
 	{
-		serial_read_byte(&command[size]);
-		size++;
+		uint8_t cmd[MSG_SIZE];
+		
+		for (uint8_t i = 0; i < MSG_SIZE; i++)
+		{
+			cmd[i] = 0x00;
+		}
+		
+		queue_dequeue(&queue, cmd);
+		
+		serial_write_chunk(cmd, MSG_SIZE);
+		
+		handler_handle(&handler, cmd);
 	}
 	
-	if (size == 32)
-	{
-		handler_handle(&handler, command);
-		size = 0;
-	}
+	delay(5);
 }
