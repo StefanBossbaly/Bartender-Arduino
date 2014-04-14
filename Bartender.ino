@@ -84,21 +84,19 @@ void setup()
 
 void loop()
 {
+	// If we have commands to process
 	if (queue.size != 0)
 	{
+		// Declare temporary storage for the command
 		uint8_t cmd[MSG_SIZE];
 		
-		for (uint8_t i = 0; i < MSG_SIZE; i++)
-		{
-			cmd[i] = 0x00;
-		}
-		
+		// Dequeue the next command in the queue
 		queue_dequeue(&queue, cmd);
 		
-		serial_write_chunk(cmd, MSG_SIZE);
-		
+		// Handle the next command
 		handler_handle(&handler, cmd);
 	}
 	
+	// Sleep little baby
 	delay(5);
 }
