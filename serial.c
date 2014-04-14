@@ -7,6 +7,7 @@
 #include <util/atomic.h>
 
 #include "serial.h"
+#include "error.h"
 
 typedef struct {
 	uint8_t buffer[USART_RX_BUFFER_SIZE];

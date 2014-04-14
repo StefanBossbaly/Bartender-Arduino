@@ -21,8 +21,8 @@ typedef struct
 } queue_t;
 
 void queue_init(queue_t *queue, uint8_t *data, uint8_t data_size, uint8_t capacity);
-void queue_enqueue(queue_t *queue, const uint8_t *data);
-void queue_dequeue(queue_t *queue, uint8_t *data);
+uint8_t queue_enqueue(queue_t *queue, const uint8_t *data);
+uint8_t queue_dequeue(queue_t *queue, uint8_t *data);
 
 #ifdef __cplusplus
 }
