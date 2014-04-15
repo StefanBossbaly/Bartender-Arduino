@@ -49,6 +49,9 @@
  */
 #define MSG_SIZE 32
 
+/**
+ * Default value if a message header is not required
+ */
 #define BLANK 0x00
 
 // -------------------------------------------------------------------------------------------
