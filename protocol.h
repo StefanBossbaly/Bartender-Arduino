@@ -200,6 +200,13 @@
  */
 #define RSP_UNK_TYPE 0x06
 
+/**
+ * Not implemented error. Sent when a message is received that is defined by the protocol but
+ * the command can not be executed due to lack of implementation. Mostly used when debugging however
+ * this code is useful if new versions of the protocol arise.
+ */
+#define RSP_NOT_IMPL 0x07
+
 #ifdef __cplusplus
 extern "C"
 {

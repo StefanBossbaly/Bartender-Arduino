@@ -57,7 +57,9 @@ void handler_handle(handler_t *handler, uint8_t *cmd)
 	}
 	else if (cmd[I_TYPE] == TYPE_RSP)
 	{
-		// Not defined yet
+		// Send back a not implemented type error
+		protocol_build_error_rsp(rsp, BLANK, RSP_NOT_IMPL);
+		serial_write_chunk(rsp, MSG_SIZE);
 	}
 	else
 	{
