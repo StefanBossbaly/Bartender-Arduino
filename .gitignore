@@ -6,3 +6,6 @@
 
 # Build output
 build-*
+
+# Documentation
+/doc
