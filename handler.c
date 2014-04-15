@@ -115,7 +115,7 @@ static void handler_process_cmd_pour(handler_t *handler, uint8_t *buffer, uint8_
 static void handler_process_cmd_status(handler_t *handler, uint8_t *buffer, uint8_t *rsp)
 {
 	// Build a response
-	protocol_build_ok_rsp(rsp, CMD_POUR);
+	protocol_build_ok_rsp(rsp, CMD_STATUS);
 
 	// Put in the bartender's current status
 	rsp[PARAM_STATUS] = handler->bartender->status;
