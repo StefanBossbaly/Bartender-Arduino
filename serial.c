@@ -129,7 +129,10 @@ uint8_t serial_read_byte(uint8_t *data_out)
 
 	status = rx_read_byte(&data);
 
-	*data_out = data;
+	if (status == E_NO_ERROR)
+	{
+		*data_out = data;
+	}
 
 	return status;
 }
@@ -146,8 +149,11 @@ uint8_t serial_write_byte(uint8_t data)
 	// Store the byte in our buffer
 	status = tx_store_byte(data);
 
-	// Enable Data Register Empty interrupt
-	UCSR0B |= (1 << UDRIE0);
+	if (status == E_NO_ERROR)
+	{
+		// Enable Data Register Empty interrupt
+		UCSR0B |= (1 << UDRIE0);
+	}
 
 	return status;
 }
