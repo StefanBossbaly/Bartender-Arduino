@@ -1,7 +1,7 @@
 /**
  * @file   bartender.h
- * @Author Stefan Bossbaly (sbossb@gmail.com)
  * @brief  Defines the functions that the bartender can perform.
+ * @author Stefan Bossbaly (sbossb@gmail.com)
  *
  * This is where all the upper level logic functions of the bartender
  * are defined. These functions hope to encapsulate the logic of the

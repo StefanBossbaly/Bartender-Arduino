@@ -1,8 +1,8 @@
 /**
  * @file   protocol.h
- * @Author Stefan Bossbaly (sbossb@gmail.com)
  * @brief  Defines the communication protocol between the bartender
  * and the control device.
+ * @author Stefan Bossbaly (sbossb@gmail.com)
  *
  * This is where the protocol between the bartender and the control device is defined. The
  * data is organized into structured format called a message. The message has a size of MSG_SIZE.
