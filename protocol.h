@@ -101,6 +101,9 @@
 // Command Section
 // -------------------------------------------------------------------------------------------
 
+/**
+ * Location of the command byte
+ */
 #define I_CMD 0x02
 
 /**
@@ -159,6 +162,9 @@
 // Response Section
 // --------------------------------------------------------
 
+/**
+ * Location of the response code
+ */
 #define I_RSP_CODE 0x03
 
 /**
