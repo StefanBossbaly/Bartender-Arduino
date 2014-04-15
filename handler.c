@@ -119,6 +119,9 @@ static void handler_process_cmd_status(handler_t *handler, uint8_t *buffer, uint
 
 	// Put in the bartender's current status
 	rsp[PARAM_STATUS] = handler->bartender->status;
+
+	// Write the command back
+	serial_write_chunk(rsp, MSG_SIZE);
 }
 
 static void handler_process_cmd_location(handler_t *handler, uint8_t *buffer, uint8_t *rsp)
