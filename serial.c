@@ -4,7 +4,7 @@
 
 #include <inttypes.h>
 #include <avr/io.h>
-#include <util/atomic.h>
+#include <avr/interrupt.h>
 
 #include "serial.h"
 #include "error.h"
@@ -127,10 +127,7 @@ uint8_t serial_read_byte(uint8_t *data_out)
 {
 	uint8_t data, status;
 
-	ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
-	{
-		status = rx_read_byte(&data);
-	}
+	status = rx_read_byte(&data);
 
 	*data_out = data;
 
@@ -146,14 +143,11 @@ uint8_t serial_write_byte(uint8_t data)
 {
 	uint8_t status;
 
-	ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
-	{
-		// Store the byte in our buffer
-		status = tx_store_byte(data);
+	// Store the byte in our buffer
+	status = tx_store_byte(data);
 
-		// Enable Data Register Empty interrupt
-		UCSR0B |= (1 << UDRIE0);
-	}
+	// Enable Data Register Empty interrupt
+	UCSR0B |= (1 << UDRIE0);
 
 	return status;
 }
