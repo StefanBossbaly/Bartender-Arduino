@@ -1,7 +1,8 @@
 /**
  * @file   error.h
- * @brief Defines the errors codes that functions can return.
+ * @brief  Defines the errors codes that functions can return.
  * @author Stefan Bossbaly (sbossb@gmail.com)
+ * @date   April, 2014
  *
  * This file contains definitions for all the error codes that can
  * be return from functions. The documentation will specify when a

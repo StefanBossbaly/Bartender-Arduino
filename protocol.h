@@ -3,6 +3,7 @@
  * @brief  Defines the communication protocol between the bartender
  * and the control device.
  * @author Stefan Bossbaly (sbossb@gmail.com)
+ * @date   April, 2014
  *
  * This is where the protocol between the bartender and the control device is defined. The
  * data is organized into structured format called a message. The message has a size of MSG_SIZE.
