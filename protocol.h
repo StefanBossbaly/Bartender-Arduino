@@ -120,9 +120,9 @@
 #define CMD_MOVE 0x02
 
 /**
- * Paramater of location
+ * The parameter of the move command. Must be in between 0-12.
  */
-#define PARAM_LOC 0x04
+#define PARAM_MOVE_LOC 0x04
 
 /**
  * Pour Command <amount>
@@ -142,7 +142,11 @@
  */
 #define CMD_STATUS 0x04
 
-#define PARAM_STATUS 0x04
+/**
+ * The response to the status command. Contains the current status of the
+ * bartender.
+ */
+#define RES_STATUS_STATUS 0x04
 
 /**
  * Location Command

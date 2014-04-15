@@ -75,7 +75,7 @@ static void handler_process_cmd_stop(handler_t *handler, uint8_t *buffer, uint8_
 static void handler_process_cmd_move(handler_t *handler, uint8_t *buffer, uint8_t *rsp)
 {
 	//Grab the variables from the content
-	uint8_t location = buffer[PARAM_LOC];
+	uint8_t location = buffer[PARAM_MOVE_LOC];
 
 	// Make sure the location is in range
 	if (location > 12)
@@ -118,7 +118,7 @@ static void handler_process_cmd_status(handler_t *handler, uint8_t *buffer, uint
 	protocol_build_ok_rsp(rsp, CMD_STATUS);
 
 	// Put in the bartender's current status
-	rsp[PARAM_STATUS] = handler->bartender->status;
+	rsp[RES_STATUS_STATUS] = handler->bartender->status;
 
 	// Write the command back
 	serial_write_chunk(rsp, MSG_SIZE);
