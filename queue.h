@@ -18,16 +18,20 @@ extern "C"
 
 #include <inttypes.h>
 
+/**
+ * A structure that represents a queue that uses a ring buffer to hold its
+ * data elements.
+ */
 typedef struct
 {
-	uint8_t *data;
-	uint8_t data_size;
+	uint8_t *data; /**< the buffer used to store data elements */
+	uint8_t data_size; /**< the size of the data elements */
 
-	uint8_t capacity;
-	uint8_t size;
+	uint8_t capacity; /**< the number of data elements the buffer can hold  */
+	uint8_t size; /**< the number of data elements currently in the queue */
 
-	uint8_t head;
-	uint8_t tail;
+	uint8_t head; /**< the index of the first element in the queue */
+	uint8_t tail; /**< the index of the last element in the queue  */
 } queue_t;
 
 /**
