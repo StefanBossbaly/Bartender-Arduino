@@ -93,11 +93,20 @@ static void handler_process_cmd_move(handler_t *handler, uint8_t *buffer, uint8_
 	serial_write_chunk(rsp, MSG_SIZE);
 
 	// Start moving
-	bartender_move_to_location(handler->bartender, location);
+	uint8_t code = bartender_move_to_location(handler->bartender, location);
 
-	// We have processed the command
-	protocol_build_complete_rsp(rsp, CMD_MOVE);
-	serial_write_chunk(rsp, MSG_SIZE);
+	if (code == E_NO_ERROR)
+	{
+		// We have processed the command
+		protocol_build_complete_rsp(rsp, CMD_MOVE);
+		serial_write_chunk(rsp, MSG_SIZE);
+	}
+	else
+	{
+		// TODO better error code
+		protocol_build_error_rsp(rsp, CMD_MOVE, RSP_ERROR);
+		serial_write_chunk(rsp, MSG_SIZE);
+	}
 }
 
 static void handler_process_cmd_pour(handler_t *handler, uint8_t *buffer, uint8_t *rsp)
@@ -107,11 +116,20 @@ static void handler_process_cmd_pour(handler_t *handler, uint8_t *buffer, uint8_
 	serial_write_chunk(rsp, MSG_SIZE);
 
 	// Todo Implement amount
-	bartender_pour(handler->bartender, 0);
+	uint8_t code = bartender_pour(handler->bartender, 0);
 
-	// The command has been completed
-	protocol_build_complete_rsp(rsp, CMD_POUR);
-	serial_write_chunk(rsp, MSG_SIZE);
+	if (code == E_NO_ERROR)
+	{
+		// The command has been completed
+		protocol_build_complete_rsp(rsp, CMD_POUR);
+		serial_write_chunk(rsp, MSG_SIZE);
+	}
+	else
+	{
+		//TODO better error codes
+		protocol_build_error_rsp(rsp, CMD_MOVE, RSP_ERROR);
+		serial_write_chunk(rsp, MSG_SIZE);
+	}
 }
 
 static void handler_process_cmd_status(handler_t *handler, uint8_t *buffer, uint8_t *rsp)

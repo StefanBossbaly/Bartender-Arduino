@@ -1,6 +1,7 @@
 #include "bartender.h"
 
 #include "Arduino.h"
+#include "error.h"
 
 #include <math.h>
 #include <util/atomic.h>
@@ -15,12 +16,12 @@ void bartender_init(bartender_t *bartender, stepper_t *stepper, toggle_driver_t 
 }
 
 
-void bartender_move_to_location(bartender_t *bartender, uint8_t location)
+uint8_t bartender_move_to_location(bartender_t *bartender, uint8_t location)
 {
 	// Make sure that we are not doing anything
 	if (bartender->status != STATUS_NONE)
 	{
-		return;
+		return E_BUSY;
 	}
 
 	// We are moving
@@ -64,14 +65,16 @@ void bartender_move_to_location(bartender_t *bartender, uint8_t location)
 
 	// We are done
 	bartender->status = STATUS_NONE;
+
+	return E_NO_ERROR;
 }
 
-void bartender_pour(bartender_t *bartender, uint8_t amount)
+uint8_t bartender_pour(bartender_t *bartender, uint8_t amount)
 {
 	// Make sure that we are not doing anything
 	if (bartender->status != STATUS_NONE)
 	{
-		return;
+		return E_BUSY;
 	}
 
 	// We are pouring
@@ -87,4 +90,6 @@ void bartender_pour(bartender_t *bartender, uint8_t amount)
 
 	// We are done
 	bartender->status = STATUS_NONE;
+
+	return E_NO_ERROR;
 }

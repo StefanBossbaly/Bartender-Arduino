@@ -89,11 +89,19 @@ void bartender_init(bartender_t *bartender, stepper_t *stepper, toggle_driver_t 
  * function. Each drink dispenser has a location label starting at
  * 1 and ending at 12. 0 is the magic value for the home location.
  *
+ * @warning This function returns E_BUSY if the status of the bartender
+ * is not STATUS_NONE.
+ *
  * @param [in] bartender The bartender that is being operated on
  * @param [in] location the new location that the bartender should
  * go to
+ *
+ * @retval E_NO_ERROR no error occurred and the function was completed
+ * successfully
+ * @retval E_BUSY if the status of the bartender was not STATUS_NONE before
+ * the function was called
  */
-void bartender_move_to_location(bartender_t *bartender, uint8_t location);
+uint8_t bartender_move_to_location(bartender_t *bartender, uint8_t location);
 
 /**
  * @name    Bartender Pour
@@ -103,11 +111,19 @@ void bartender_move_to_location(bartender_t *bartender, uint8_t location);
  * The bartender will pour the specified amount from the dispenser
  * that the bartender is currently at.
  *
+ * @warning This function returns E_BUSY if the status of the bartender
+ * is not STATUS_NONE.
+ *
  * @param [in] bartender The bartender that is being operated on
  * @param [in] amount the amount of liquid that the bartender should
  * pour from the dispenser.
+ *
+ * @retval E_NO_ERROR no error occurred and the function was completed
+ * successfully
+ * @retval E_BUSY if the status of the bartender was not STATUS_NONE before
+ * the function was called
  */
-void bartender_pour(bartender_t *bartender, uint8_t amount);
+uint8_t bartender_pour(bartender_t *bartender, uint8_t amount);
 
 #ifdef __cplusplus
 }

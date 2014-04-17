@@ -46,4 +46,10 @@
  */
 #define E_EMPTY 0x03
 
+/**
+ * The busy error code. Returned if the function can not be performed because
+ * it is busy doing something else.
+ */
+#define E_BUSY 0x04
+
 #endif /* ERROR_H_ */
