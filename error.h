@@ -6,7 +6,8 @@
  *
  * This file contains definitions for all the error codes that can
  * be return from functions. The documentation will specify when a
- * function returns an error code. Note that the maximum size of an error
+ * function returns an
+ error code. Note that the maximum size of an error
  * code is 1 byte so a uint8_t data type is optimal for storing an error
  * code.
  *
@@ -51,5 +52,12 @@
  * it is busy doing something else.
  */
 #define E_BUSY 0x04
+
+/**
+ * The interrupted error code. Returned if the function was interrupted and
+ * the interrupt effects the logic of the function so that is does not fully
+ * complete.
+ */
+#define E_INT 0x05
 
 #endif /* ERROR_H_ */
