@@ -115,8 +115,9 @@ static void handler_process_cmd_pour(handler_t *handler, uint8_t *buffer, uint8_
 	protocol_build_ok_rsp(rsp, CMD_POUR);
 	serial_write_chunk(rsp, MSG_SIZE);
 
-	// Todo Implement amount
-	uint8_t code = bartender_pour(handler->bartender, 0);
+	uint8_t amount = rsp[PARAM_POUR_AMOUNT];
+
+	uint8_t code = bartender_pour(handler->bartender, amount);
 
 	if (code == E_NO_ERROR)
 	{

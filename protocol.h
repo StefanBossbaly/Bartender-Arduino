@@ -136,6 +136,12 @@
 #define CMD_POUR 0x03
 
 /**
+ * The parameter of the pour command. Defines the amount of shots to be poured
+ * into the glass.
+ */
+#define PARAM_POUR_AMOUNT 0x04
+
+/**
  * Status Command
  *
  * Returns the status of the bartender. If the bartender

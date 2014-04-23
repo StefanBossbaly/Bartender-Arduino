@@ -47,6 +47,12 @@ extern "C"
 #define STATUS_POURING 0x02
 
 /**
+ * The bartender has be interrupted and needs to stop doing any kind of interrupt
+ * sensitive activities.
+ */
+#define STATUS_INT 0x03
+
+/**
  * The structure of a bartender. Hold all the attributes that a bartender
  * has. Please look at the file explanation for more documentation.
  */

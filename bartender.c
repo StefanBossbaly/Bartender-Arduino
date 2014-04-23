@@ -80,13 +80,17 @@ uint8_t bartender_pour(bartender_t *bartender, uint8_t amount)
 	// We are pouring
 	bartender->status = STATUS_POURING;
 
-	toggle_driver_move(bartender->toggler, UP);
-	delay(5000);
+	// Loop
+	for (uint8_t i = 0; i < amount; i++)
+	{
+		toggle_driver_move(bartender->toggler, UP);
+		delay(5000);
 
-	toggle_driver_move(bartender->toggler, DOWN);
-	delay(5000);
+		toggle_driver_move(bartender->toggler, DOWN);
+		delay(5000);
 
-	toggle_driver_stop(bartender->toggler);
+		toggle_driver_stop(bartender->toggler);
+	}
 
 	// We are done
 	bartender->status = STATUS_NONE;
