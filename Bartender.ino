@@ -67,7 +67,7 @@ void setup()
 	stepper_release(&stepper);
 	
 	// Init Toggler
-	toggle_driver_init(&toggler, 7, 8);
+	toggle_driver_init(&toggler, 6, 7);
 	
 	// Init bartender
 	bartender_init(&bartender, &stepper, &toggler, 0);
@@ -77,6 +77,18 @@ void setup()
 	
 	// Init the queue
 	queue_init(&queue, qdata, MSG_SIZE, 10);
+	
+	// Pin Change Interrupt Control Register
+	// Page 73 of documentation
+	PCICR |= (1 << PCIE0);
+	
+	// Ping Change Mask Register 1
+	// Page 74 of documentation
+	PCMSK0 |= (1 << PCINT0);
+	
+	// Interrupt on the rising edge
+	EICRA |= ~(1 << ISC00) | (1 << ISC01);
+	pinMode(8, INPUT); 
 	
 	// Init the timer
 	timer2_init_ms(150, handle);
@@ -99,4 +111,14 @@ void loop()
 	
 	// Sleep little baby
 	delay(5);
+}
+
+ISR(PCINT0_vect)
+{
+	if (bartender.status == STATUS_MOVING && bartender.location != 0)
+	{
+		bartender.status = STATUS_INT;
+	}
+	
+	PCIFR |= (1 << PCIF0);
 }
