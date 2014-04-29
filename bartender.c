@@ -6,7 +6,7 @@
 #include <math.h>
 #include <util/atomic.h>
 
-uint16_t step_distances[13] = {900, 635, 675, 675, 660, 675, 675, 675, 675, 675, 645, 675, 675};
+uint16_t step_distances[13] = {880, 635, 675, 675, 660, 675, 675, 675, 675, 675, 645, 675, 675};
 
 void bartender_init(bartender_t *bartender, stepper_t *stepper, toggle_driver_t *toggler, uint8_t location)
 {
@@ -48,7 +48,25 @@ uint8_t bartender_move_to_location(bartender_t *bartender, uint8_t location)
 			steps = step_distances[bartender->location - 1];
 		}
 
-		stepper_multi_step(bartender->stepper, steps, direction);
+		// Special case. Keep going until we hit the bump sensor
+		if (location == 0 && bartender->location == 1)
+		{
+			steps = 0xFFFF;
+		}
+
+		for (uint16_t i = 0; (i < steps) && (bartender->status == STATUS_MOVING); i++)
+		{
+			stepper_step(bartender->stepper, direction);
+		}
+
+		// We were interrupted
+		if (bartender->status == STATUS_INT)
+		{
+			stepper_release(bartender->stepper);
+			bartender->location = 0;
+			bartender->status = STATUS_NONE;
+			return E_NO_ERROR;
+		}
 
 		if (direction == FORWARD)
 		{
