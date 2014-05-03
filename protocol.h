@@ -213,6 +213,19 @@
  */
 #define RSP_NOT_IMPL 0x07
 
+/**
+ * Fatal error code. This means that a fatal error occurred and the device's state is no longer known.
+ * Basically if this error code is received the device can not be counted on to do normal operation and
+ * should be reset.
+ */
+#define RSP_FATAL_ERROR 0x08
+
+/**
+ * Queue full response. Send when a message would overflow the message queue. This means that the message
+ * has been ignored.
+ */
+#define RSP_QUEUE_FULL 0x09
+
 #ifdef __cplusplus
 extern "C"
 {

@@ -43,10 +43,12 @@ void handle()
 				// Add the buffer to the queue
 				uint8_t error = queue_enqueue(&queue, temp_buffer);
 				
-				// Oh boy a fatal error
-				if (error != E_NO_ERROR)
+				// Oh boy the queue is full
+				if (error == E_BUFF_OVERFLOW)
 				{
-					
+					uint8_t buffer[MSG_SIZE];
+					protocol_build_error_rsp(buffer, temp_buffer[I_CMD], RSP_QUEUE_FULL);
+					serial_write_chunk(buffer, MSG_SIZE);
 				}
 			}
 			
