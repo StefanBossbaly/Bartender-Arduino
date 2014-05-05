@@ -36,6 +36,13 @@ void handle()
 			// If it is the status or the stop command we need to process it right away
 			if (temp_buffer[I_CMD] == CMD_STATUS || temp_buffer[I_CMD] == CMD_STOP)
 			{
+				// Oh boy. Clear the queue. This might get ugly
+				if (temp_buffer[I_CMD] == CMD_STOP)
+				{
+					queue_clear(&queue);
+				}
+				
+				// Handle the command right away
 				handler_handle(&handler, temp_buffer);
 			}
 			else
