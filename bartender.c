@@ -124,3 +124,40 @@ uint8_t bartender_pour(bartender_t *bartender, uint8_t amount)
 
 	return E_NO_ERROR;
 }
+
+uint8_t bartender_stop(bartender_t *bartender)
+{
+	// Let other functions know we are stopped
+	bartender->status = STATUS_STOPPED;
+
+	return E_NO_ERROR;
+}
+
+uint8_t bartender_reset(bartender_t *bartender)
+{
+	// Make sure that we are in the stopped state
+	if (bartender->status != STATUS_STOPPED)
+	{
+		return E_INV_CALL;
+	}
+
+	// Lower the linear actuator for pouring
+	toggle_driver_move(bartender->toggler, DOWN);
+	delay(5000);
+
+	toggle_driver_stop(bartender->toggler);
+
+	// Move to location 0
+	while (bartender->status != STATUS_INT)
+	{
+		stepper_step(bartender->stepper, REVERSE);
+	}
+
+	// Reset the location
+	bartender->location = 0;
+
+	// Reset the status
+	bartender->status = STATUS_NONE;
+
+	return E_NO_ERROR;
+}

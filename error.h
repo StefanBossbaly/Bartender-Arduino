@@ -60,4 +60,10 @@
  */
 #define E_INT 0x05
 
+/**
+ * The invalid function call error code. Returned if the function called did not
+ * have a precondition met.
+ */
+#define E_INV_CALL 0x06
+
 #endif /* ERROR_H_ */

@@ -53,6 +53,12 @@ extern "C"
 #define STATUS_INT 0x03
 
 /**
+ * The bartender has been stopped and needs the bartender_reset() function called in
+ * order to resume normal operation.
+ */
+#define STATUS_STOPPED 0x04
+
+/**
  * The structure of a bartender. Hold all the attributes that a bartender
  * has. Please look at the file explanation for more documentation.
  */
@@ -130,6 +136,46 @@ uint8_t bartender_move_to_location(bartender_t *bartender, uint8_t location);
  * the function was called
  */
 uint8_t bartender_pour(bartender_t *bartender, uint8_t amount);
+
+/**
+ * @name    Bartender Stop
+ * @brief   Stops any operation of the bartender
+ * @ingroup bartender
+ *
+ * This stops the bartender from processing any current commands.
+ *
+ * @note That this stops the bartender in the current state. (If the
+ * bartender was moving or if the bartender was pouring this function
+ * will stop any operation in the current state).
+ *
+ * @param [in] bartender The bartender that is being operated on
+ *
+ * @retval E_NO_ERROR no error occurred and the function was completed
+ * successfully
+ */
+uint8_t bartender_stop(bartender_t *bartender);
+
+/**
+ * @name    Bartender Reset
+ * @brief   Resets a stopped bartender
+ * @ingroup bartender
+ *
+ * This function resets the bartender from the stopped state. It first
+ * lowers the linear actuator used for pouring the drinks. Next it moves
+ * the drink plate back to the home position. It then resets the status
+ * and the location of the bartender. This function must be called in order
+ * for the bartender to process commands after the stop function is called.
+ *
+ * @warning This function returns E_INV_CALL if the status of the bartender
+ * is not STATUS_STOPPED.
+ *
+ * @param [in] bartender The bartender that is being operated on
+ *
+ * @retval E_NO_ERROR no error occurred and the function was completed
+ * successfully
+ * @retval E_INV_CALL if the status of the bartender is not STATUS_STOPPED
+ */
+uint8_t bartender_reset(bartender_t *bartender);
 
 #ifdef __cplusplus
 }
