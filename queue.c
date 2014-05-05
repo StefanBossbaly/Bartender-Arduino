@@ -62,3 +62,13 @@ uint8_t queue_dequeue(queue_t *queue, uint8_t *data)
 
 	return E_NO_ERROR;
 }
+
+uint8_t queue_clear(queue_t *queue)
+{
+	queue->head = 0;
+	queue->tail = 0;
+
+	queue->size = 0;
+
+	return E_NO_ERROR;
+}

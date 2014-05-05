@@ -87,6 +87,21 @@ uint8_t queue_enqueue(queue_t *queue, const uint8_t *data);
  */
 uint8_t queue_dequeue(queue_t *queue, uint8_t *data);
 
+/**
+ * @name    Clears the queue
+ * @brief   Removes all data from the queue
+ * @ingroup queue
+ *
+ * Removes all data from the queue and sets the queue size to
+ * 0.
+ *
+ * @param [in] queue the queue that will be cleared of all its data.
+ *
+ * @retval E_NO_ERROR if no error occurred and the queue was successfully cleared.
+ *
+ */
+uint8_t queue_clear(queue_t *queue);
+
 #ifdef __cplusplus
 }
 #endif
