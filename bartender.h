@@ -63,7 +63,7 @@ typedef struct
 	toggle_driver_t *toggler; /**< the motor driver of the vertical linear actuator
 	 	 	 	 	 	 	 	 that dispenses liquid */
 	uint8_t location; /**< the current location of the drink plate of the bartender */
-	uint8_t status; /**< the status of the bartender as defined by the status
+	volatile uint8_t status; /**< the status of the bartender as defined by the status
 	 	 	 	 	 	 definitions found in this file. */
 } bartender_t;
 
